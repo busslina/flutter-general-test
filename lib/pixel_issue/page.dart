@@ -14,7 +14,7 @@ class PageTable extends StatelessWidget {
           _buildExpandedChild(),
           _buildExpandedChild(),
         ],
-      ).bgColor(Colors.black);
+      ).bgColor(Colors.blue);
 
   Widget _buildExpandedChild() => Expanded(
         flex: 1,
@@ -22,6 +22,6 @@ class PageTable extends StatelessWidget {
           'Hey',
           textAlign: TextAlign.center,
           color: Colors.black,
-        ).sized(height: double.infinity).bgColor(Colors.blue),
+        ).sized(height: double.infinity),
       );
 }
