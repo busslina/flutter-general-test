@@ -10,5 +10,11 @@
             "type": "dart",
             "program": "lib/busslina_table.main.dart"
         },
+        {
+            "name": "Pixel Issue",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/pixel_issue.main.dart"
+        },
     ]
 }
