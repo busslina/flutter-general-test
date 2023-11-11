@@ -47,7 +47,13 @@ class _TabContentState extends State<TabContent> {
   @override
   void initState() {
     super.initState();
-    llib.debug('_TabContentState.initState()');
+    llib.debug('_TabContentState.initState() -- ${widget.text}');
+  }
+
+  @override
+  void dispose() {
+    llib.debug('_TabContentState.dispose() -- ${widget.text}');
+    super.dispose();
   }
 
   @override
