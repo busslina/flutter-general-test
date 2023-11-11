@@ -8,6 +8,7 @@ class PageTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => fllib.BusslinaTable(
+        providerKey: 'myTable',
         columnLength: 4,
         rowLength: 100,
         headerCellBuilder: (columnIndex) => const fllib.Label(
