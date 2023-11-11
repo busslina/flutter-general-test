@@ -16,5 +16,11 @@
             "type": "dart",
             "program": "lib/pixel_issue.main.dart"
         },
+        {
+            "name": "Keep alive",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/keep_alive.main.dart"
+        },
     ]
 }
