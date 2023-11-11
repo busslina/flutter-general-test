@@ -4,20 +4,32 @@ import 'package:busslina_dart_lightweight_lib/busslina_dart_lightweight_lib.dart
     as llib;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:general_test/keep_alive/page_one.dart';
+import 'package:general_test/keep_alive/providers.dart';
 
-class PageTwo extends StatefulWidget {
+class PageTwo extends ConsumerStatefulWidget {
   const PageTwo({Key? key}) : super(key: key);
 
   @override
-  State<PageTwo> createState() => _PageTwoState();
+  ConsumerState<PageTwo> createState() => _PageTwoState();
 }
 
-class _PageTwoState extends State<PageTwo> {
+class _PageTwoState extends ConsumerState<PageTwo> {
   @override
   Widget build(BuildContext context) => DefaultTabController(
         length: 2,
         child: Scaffold(
           appBar: AppBar(
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    ref
+                        .read(currentPageProvider.notifier)
+                        .changePage(const PageOne());
+                  },
+                  icon: const Icon(Icons.keyboard_return))
+            ],
             bottom: const TabBar(tabs: [
               Tab(text: '1'),
               Tab(text: '2'),
@@ -43,7 +55,8 @@ class TabContent extends StatefulWidget {
   State<TabContent> createState() => _TabContentState();
 }
 
-class _TabContentState extends State<TabContent> {
+class _TabContentState extends State<TabContent>
+    with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     super.initState();
@@ -57,10 +70,16 @@ class _TabContentState extends State<TabContent> {
   }
 
   @override
-  Widget build(BuildContext context) => Center(
-        child: fllib.Label(
-          widget.text,
-          color: Colors.black,
-        ),
-      );
+  Widget build(BuildContext context) {
+    super.build(context);
+    return Center(
+      child: fllib.Label(
+        widget.text,
+        color: Colors.black,
+      ),
+    );
+  }
+
+  @override
+  bool get wantKeepAlive => true;
 }
