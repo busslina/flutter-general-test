@@ -11,11 +11,16 @@ dependencies:
     sdk: flutter
   busslina_flutter_lightweight_lib:
     path: ../../LIBS/busslina-flutter-lightweight-lib
+  flutter_riverpod: ^2.4.5
+  riverpod_annotation: ^2.3.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  riverpod_generator: ^2.3.5
+  build_runner: ^2.4.6
+  custom_lint: ^0.5.6
 
 flutter:
   uses-material-design: true
