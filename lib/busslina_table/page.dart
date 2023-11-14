@@ -4,7 +4,12 @@
 import 'package:flutter/material.dart';
 
 class PageTable extends StatelessWidget {
-  const PageTable({Key? key}) : super(key: key);
+  final Object tableProviderKey;
+
+  const PageTable({
+    Key? key,
+    required this.tableProviderKey,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) => throw ('Not implemented');

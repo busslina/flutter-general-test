@@ -3,11 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:general_test/busslina_table/page.dart';
 
 void main() {
-  runApp(App());
+  final tableProviderKey = Object();
+  runApp(App(
+    tableProviderKey: tableProviderKey,
+  ));
 }
 
 class App extends StatelessWidget {
-  const App({super.key});
+  final Object tableProviderKey;
+
+  const App({
+    super.key,
+    required this.tableProviderKey,
+  });
 
   @override
   Widget build(BuildContext context) => MaterialApp(
@@ -19,6 +27,6 @@ class App extends StatelessWidget {
             PointerDeviceKind.stylus,
           },
         ),
-        home: const PageTable(),
+        home: PageTable(tableProviderKey: tableProviderKey),
       );
 }
