@@ -85,6 +85,24 @@ class _PageTwoState extends ConsumerState<PageTwo> {
                       color: Colors.black,
                     )).marginTop(10),
 
+                // Remove current button
+                ElevatedButton(
+                  onPressed: _subpages.length <= 1
+                      ? null
+                      : () {
+                          setState(() {
+                            final res = _subpages.remove(_subpageSelected);
+                            if (!res) {
+                              throw ('Error removing current subpage');
+                            }
+                          });
+                        },
+                  child: const fllib.Label(
+                    'Remove current',
+                    color: Colors.black,
+                  ),
+                ).marginTop(15),
+
                 // Subpage
                 Expanded(
                     child: IndexedStack(
