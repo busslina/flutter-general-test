@@ -57,18 +57,20 @@ class _PageTwoState extends ConsumerState<PageTwo> {
 
                 // Subpage selector
                 _SubPageSelector(
+                  currentSubPageIndex: _subpageSelected,
                   currentSubPagePosition: _subpages.indexOf(_subpageSelected),
                   onIndexChanged: _changeSelectedSubpage,
                   subpagesCount: _subpages.length,
                 ).marginTop(20),
 
-                // Subpage shuffle
+                // Shuffle button
                 ElevatedButton(
                     onPressed: _shuffleSubpages,
                     child: const fllib.Label(
                       'Shuffle subpages',
                       color: Colors.black,
                     )).marginTop(10),
+
                 // Subpage
                 Expanded(
                     child: IndexedStack(
@@ -78,7 +80,7 @@ class _PageTwoState extends ConsumerState<PageTwo> {
                     for (final index in _subpages)
                       _SubPage(
                         key: Key(index.toString()),
-                        text: 'Subpage ${index + 1}',
+                        text: 'Subpage $index',
                         position: _subpages.indexOf(_subpageSelected),
                       ),
                   ],
@@ -110,11 +112,13 @@ class _PageTwoState extends ConsumerState<PageTwo> {
 }
 
 class _SubPageSelector extends StatelessWidget {
+  final int currentSubPageIndex;
   final int currentSubPagePosition;
   final Function(int position) onIndexChanged;
   final int subpagesCount;
 
   const _SubPageSelector({
+    required this.currentSubPageIndex,
     required this.currentSubPagePosition,
     required this.onIndexChanged,
     required this.subpagesCount,
@@ -129,7 +133,7 @@ class _SubPageSelector extends StatelessWidget {
               currentSubPagePosition == 0 ? null : _previousSubPage),
 
           // Current page label
-          fllib.Label('Subpage ${currentSubPagePosition + 1}'),
+          fllib.Label('Subpage $currentSubPageIndex'),
 
           // Next subpage button
           _buildButton('Next',
@@ -145,45 +149,6 @@ class _SubPageSelector extends StatelessWidget {
   void _previousSubPage() => onIndexChanged(currentSubPagePosition - 1);
   void _nextSubPage() => onIndexChanged(currentSubPagePosition + 1);
 }
-
-// class _SubPageShifter extends StatelessWidget {
-//   final int currentSubPageIndex;
-//   final Function(int indexA, int indexB) onShiftRequest;
-//   final int subpagesCount;
-
-//   const _SubPageShifter({
-//     required this.currentSubPageIndex,
-//     required this.onShiftRequest,
-//     required this.subpagesCount,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) => Row(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         children: [
-//           // Shift with previous subpage button
-//           _buildButton('Shift with previous',
-//               currentSubPageIndex == 0 ? null : _shiftWithPreviousSubPage),
-
-//           // Shift with next subpage button
-//           _buildButton(
-//               'Shift with next',
-//               currentSubPageIndex < subpagesCount - 1
-//                   ? _shoftWithNextSubPage
-//                   : null),
-//         ],
-//       ).sized(height: 50);
-
-//   Widget _buildButton(String text, VoidCallback? onPressed) => ElevatedButton(
-//         onPressed: onPressed,
-//         child: fllib.Label(text),
-//       ).sized(width: 150);
-
-//   void _shiftWithPreviousSubPage() =>
-//       onShiftRequest(currentSubPageIndex, currentSubPageIndex - 1);
-//   void _shoftWithNextSubPage() =>
-//       onShiftRequest(currentSubPageIndex, currentSubPageIndex + 1);
-// }
 
 class _SubPage extends StatefulWidget {
   final String text;
@@ -230,7 +195,7 @@ class _SubPageState extends State<_SubPage> {
 
           // Position text
           fllib.Label(
-            'Position: ${widget.position + 1}',
+            'Position: ${widget.position}',
             color: Colors.black,
           ).marginTop(15),
 
