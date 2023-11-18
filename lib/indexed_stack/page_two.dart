@@ -18,6 +18,7 @@ class PageTwo extends ConsumerStatefulWidget {
 
 class _PageTwoState extends ConsumerState<PageTwo> {
   int _subpageSelected = 0;
+  int _maxSubpages = 5;
 
   @override
   Widget build(BuildContext context) => DefaultTabController(
@@ -38,10 +39,21 @@ class _PageTwoState extends ConsumerState<PageTwo> {
                   child: const Icon(Icons.keyboard_return),
                 ),
 
+                // Add subpage button
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _maxSubpages++;
+                    });
+                  },
+                  child: const Icon(Icons.add),
+                ),
+
                 // Subpage selector
                 _SubPageSelector(
                   currentSubPageIndex: _subpageSelected,
                   onIndexChanged: _changeSubPage,
+                  maxSubpages: _maxSubpages,
                 ),
 
                 // Subpage
@@ -49,7 +61,7 @@ class _PageTwoState extends ConsumerState<PageTwo> {
                     child: IndexedStack(
                   index: _subpageSelected,
                   children: [
-                    for (int i = 0; i < 5; i++)
+                    for (int i = 0; i < _maxSubpages; i++)
                       _SubPage(
                         key: Key(i.toString()),
                         text: 'Subpage ${i + 1}',
@@ -76,10 +88,12 @@ class _PageTwoState extends ConsumerState<PageTwo> {
 class _SubPageSelector extends StatefulWidget {
   final int currentSubPageIndex;
   final Function(int index) onIndexChanged;
+  final int maxSubpages;
 
   const _SubPageSelector({
     required this.currentSubPageIndex,
     required this.onIndexChanged,
+    required this.maxSubpages,
   });
 
   @override
@@ -100,7 +114,10 @@ class _SubPageSelectorState extends State<_SubPageSelector> {
 
           // Next page button
           _buildButton(
-              'Next', widget.currentSubPageIndex == 4 ? null : _nextSubPage),
+              'Next',
+              widget.currentSubPageIndex < widget.maxSubpages - 1
+                  ? _nextSubPage
+                  : null),
         ],
       ).sized(height: 50);
 
