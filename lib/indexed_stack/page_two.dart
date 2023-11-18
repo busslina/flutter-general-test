@@ -91,7 +91,7 @@ class _PageTwoState extends ConsumerState<PageTwo> {
   }
 }
 
-class _SubPageSelector extends StatefulWidget {
+class _SubPageSelector extends StatelessWidget {
   final int currentSubPageIndex;
   final Function(int index) onIndexChanged;
   final int subpagesCount;
@@ -103,27 +103,19 @@ class _SubPageSelector extends StatefulWidget {
   });
 
   @override
-  State<StatefulWidget> createState() => _SubPageSelectorState();
-}
-
-class _SubPageSelectorState extends State<_SubPageSelector> {
-  @override
   Widget build(BuildContext context) => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // Previous page button
-          _buildButton('Previous',
-              widget.currentSubPageIndex == 0 ? null : _previousSubPage),
+          _buildButton(
+              'Previous', currentSubPageIndex == 0 ? null : _previousSubPage),
 
           // Current page label
-          fllib.Label('Subpage ${widget.currentSubPageIndex + 1}'),
+          fllib.Label('Subpage ${currentSubPageIndex + 1}'),
 
           // Next page button
-          _buildButton(
-              'Next',
-              widget.currentSubPageIndex < widget.subpagesCount - 1
-                  ? _nextSubPage
-                  : null),
+          _buildButton('Next',
+              currentSubPageIndex < subpagesCount - 1 ? _nextSubPage : null),
         ],
       ).sized(height: 50);
 
@@ -132,9 +124,8 @@ class _SubPageSelectorState extends State<_SubPageSelector> {
         child: fllib.Label(text),
       ).sized(width: 100);
 
-  void _previousSubPage() =>
-      widget.onIndexChanged(widget.currentSubPageIndex - 1);
-  void _nextSubPage() => widget.onIndexChanged(widget.currentSubPageIndex + 1);
+  void _previousSubPage() => onIndexChanged(currentSubPageIndex - 1);
+  void _nextSubPage() => onIndexChanged(currentSubPageIndex + 1);
 }
 
 class _SubPage extends StatefulWidget {
