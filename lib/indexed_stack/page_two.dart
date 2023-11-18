@@ -57,12 +57,12 @@ class _PageTwoState extends ConsumerState<PageTwo> {
 
                 // Subpage selector
                 _SubPageSelector(
-                  currentSubPageIndex: _subpageSelected,
+                  currentSubPagePosition: _subpages.indexOf(_subpageSelected),
                   onIndexChanged: _changeSelectedSubpage,
                   subpagesCount: _subpages.length,
                 ).marginTop(20),
 
-                // Subpage shifter
+                // Subpage shuffle
                 ElevatedButton(
                     onPressed: _shuffleSubpages,
                     child: const fllib.Label(
@@ -72,12 +72,14 @@ class _PageTwoState extends ConsumerState<PageTwo> {
                 // Subpage
                 Expanded(
                     child: IndexedStack(
-                  index: _subpageSelected,
+                  // index: _subpageSelected,
+                  index: _subpages.indexOf(_subpageSelected),
                   children: [
                     for (final index in _subpages)
                       _SubPage(
                         key: Key(index.toString()),
                         text: 'Subpage ${index + 1}',
+                        position: _subpages.indexOf(_subpageSelected),
                       ),
                   ],
                 ))
@@ -87,30 +89,33 @@ class _PageTwoState extends ConsumerState<PageTwo> {
         ),
       );
 
-  void _changeSelectedSubpage(int index) {
-    if (_subpageSelected == index) {
+  void _changeSelectedSubpage(int position) {
+    final newIndex = _subpages[position];
+
+    if (_subpageSelected == newIndex) {
       return;
     }
 
     setState(() {
-      _subpageSelected = index;
+      _subpageSelected = newIndex;
     });
   }
 
   void _shuffleSubpages() {
     setState(() {
       _subpages.shuffle();
+      llib.debug(_subpages);
     });
   }
 }
 
 class _SubPageSelector extends StatelessWidget {
-  final int currentSubPageIndex;
-  final Function(int index) onIndexChanged;
+  final int currentSubPagePosition;
+  final Function(int position) onIndexChanged;
   final int subpagesCount;
 
   const _SubPageSelector({
-    required this.currentSubPageIndex,
+    required this.currentSubPagePosition,
     required this.onIndexChanged,
     required this.subpagesCount,
   });
@@ -120,15 +125,15 @@ class _SubPageSelector extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // Previous subpage button
-          _buildButton(
-              'Previous', currentSubPageIndex == 0 ? null : _previousSubPage),
+          _buildButton('Previous',
+              currentSubPagePosition == 0 ? null : _previousSubPage),
 
           // Current page label
-          fllib.Label('Subpage ${currentSubPageIndex + 1}'),
+          fllib.Label('Subpage ${currentSubPagePosition + 1}'),
 
           // Next subpage button
           _buildButton('Next',
-              currentSubPageIndex < subpagesCount - 1 ? _nextSubPage : null),
+              currentSubPagePosition < subpagesCount - 1 ? _nextSubPage : null),
         ],
       ).sized(height: 50);
 
@@ -137,8 +142,8 @@ class _SubPageSelector extends StatelessWidget {
         child: fllib.Label(text),
       ).sized(width: 100);
 
-  void _previousSubPage() => onIndexChanged(currentSubPageIndex - 1);
-  void _nextSubPage() => onIndexChanged(currentSubPageIndex + 1);
+  void _previousSubPage() => onIndexChanged(currentSubPagePosition - 1);
+  void _nextSubPage() => onIndexChanged(currentSubPagePosition + 1);
 }
 
 // class _SubPageShifter extends StatelessWidget {
@@ -182,10 +187,12 @@ class _SubPageSelector extends StatelessWidget {
 
 class _SubPage extends StatefulWidget {
   final String text;
+  final int position;
 
   const _SubPage({
     Key? key,
     required this.text,
+    required this.position,
   }) : super(key: key);
 
   @override
@@ -220,6 +227,12 @@ class _SubPageState extends State<_SubPage> {
             color: Colors.black,
             fontSize: 20,
           ),
+
+          // Position text
+          fllib.Label(
+            'Position: ${widget.position + 1}',
+            color: Colors.black,
+          ).marginTop(15),
 
           // Counter text
           fllib.Label(
