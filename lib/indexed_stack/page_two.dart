@@ -97,7 +97,11 @@ class _PageTwoState extends ConsumerState<PageTwo> {
     });
   }
 
-  void _shuffleSubpages() => _subpages.shuffle();
+  void _shuffleSubpages() {
+    setState(() {
+      _subpages.shuffle();
+    });
+  }
 }
 
 class _SubPageSelector extends StatelessWidget {
