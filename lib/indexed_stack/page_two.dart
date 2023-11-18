@@ -18,7 +18,7 @@ class PageTwo extends ConsumerStatefulWidget {
 
 class _PageTwoState extends ConsumerState<PageTwo> {
   int _subpageSelected = 0;
-  int _maxSubpages = 5;
+  final _subpages = [0];
 
   @override
   Widget build(BuildContext context) => DefaultTabController(
@@ -43,25 +43,31 @@ class _PageTwoState extends ConsumerState<PageTwo> {
                 ElevatedButton(
                   onPressed: () {
                     setState(() {
-                      _maxSubpages++;
+                      _subpages.add(_subpages.length);
                     });
                   },
                   child: const Icon(Icons.add),
-                ),
+                ).marginTop(15),
+
+                // Subpages count text
+                fllib.Label(
+                  'Subpages: ${_subpages.length}',
+                  color: Colors.black,
+                ).marginTop(10),
 
                 // Subpage selector
                 _SubPageSelector(
                   currentSubPageIndex: _subpageSelected,
                   onIndexChanged: _changeSubPage,
-                  maxSubpages: _maxSubpages,
-                ),
+                  subpagesCount: _subpages.length,
+                ).marginTop(20),
 
                 // Subpage
                 Expanded(
                     child: IndexedStack(
                   index: _subpageSelected,
                   children: [
-                    for (int i = 0; i < _maxSubpages; i++)
+                    for (int i = 0; i < _subpages.length; i++)
                       _SubPage(
                         key: Key(i.toString()),
                         text: 'Subpage ${i + 1}',
@@ -88,12 +94,12 @@ class _PageTwoState extends ConsumerState<PageTwo> {
 class _SubPageSelector extends StatefulWidget {
   final int currentSubPageIndex;
   final Function(int index) onIndexChanged;
-  final int maxSubpages;
+  final int subpagesCount;
 
   const _SubPageSelector({
     required this.currentSubPageIndex,
     required this.onIndexChanged,
-    required this.maxSubpages,
+    required this.subpagesCount,
   });
 
   @override
@@ -115,7 +121,7 @@ class _SubPageSelectorState extends State<_SubPageSelector> {
           // Next page button
           _buildButton(
               'Next',
-              widget.currentSubPageIndex < widget.maxSubpages - 1
+              widget.currentSubPageIndex < widget.subpagesCount - 1
                   ? _nextSubPage
                   : null),
         ],
