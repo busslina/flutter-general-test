@@ -25,7 +25,7 @@ class _PageTwoState extends ConsumerState<PageTwo> {
         length: 2,
         child: Scaffold(
           body: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 150),
+            padding: const EdgeInsets.symmetric(vertical: 125),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -47,6 +47,20 @@ class _PageTwoState extends ConsumerState<PageTwo> {
                     });
                   },
                   child: const Icon(Icons.add),
+                ).marginTop(15),
+
+                // Add subpage button (before current)
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _subpages.insert(_subpages.indexOf(_subpageSelected),
+                          _subpages.length);
+                    });
+                  },
+                  child: const fllib.Label(
+                    'Insert before current',
+                    color: Colors.black,
+                  ),
                 ).marginTop(15),
 
                 // Subpages count text
@@ -74,7 +88,6 @@ class _PageTwoState extends ConsumerState<PageTwo> {
                 // Subpage
                 Expanded(
                     child: IndexedStack(
-                  // index: _subpageSelected,
                   index: _subpages.indexOf(_subpageSelected),
                   children: [
                     for (final index in _subpages)
