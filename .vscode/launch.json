@@ -22,5 +22,11 @@
             "type": "dart",
             "program": "lib/keep_alive.main.dart"
         },
+        {
+            "name": "Indexed Stack",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/indexed_stack.main.dart"
+        },
     ]
 }

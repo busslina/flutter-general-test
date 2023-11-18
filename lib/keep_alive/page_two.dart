@@ -5,8 +5,8 @@ import 'package:busslina_flutter_lightweight_lib/busslina_flutter_lightweight_li
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:general_test/keep_alive/providers.dart';
 
+import 'providers.dart';
 import 'page_one.dart';
 
 class PageTwo extends ConsumerStatefulWidget {

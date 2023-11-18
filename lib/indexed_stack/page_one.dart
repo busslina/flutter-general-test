@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'providers.dart';
 import 'page_two.dart';
-import 'page_three.dart';
 
 class PageOne extends ConsumerStatefulWidget {
   const PageOne({Key? key}) : super(key: key);
@@ -31,16 +30,6 @@ class _PageOneState extends ConsumerState<PageOne> {
                   .changePage(const PageTwo());
             },
             child: const fllib.Label('Page 2'),
-          ),
-
-          // Button page 3
-          ElevatedButton(
-            onPressed: () {
-              ref
-                  .read(currentPageProvider.notifier)
-                  .changePage(const PageThree());
-            },
-            child: const fllib.Label('Page 3'),
           ),
         ],
       ));
