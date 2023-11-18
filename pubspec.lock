@@ -130,7 +130,7 @@ packages:
     source: hosted
     version: "8.7.0"
   busslina_dart_lightweight_lib:
-    dependency: transitive
+    dependency: "direct main"
     description:
       path: "../../../DART/LIBS/busslina-dart-lightweight-lib"
       relative: true

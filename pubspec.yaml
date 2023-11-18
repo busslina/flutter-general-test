@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  busslina_dart_lightweight_lib:
+    path: ../../../DART/LIBS/busslina-dart-lightweight-lib
   busslina_flutter_lightweight_lib:
     path: ../../LIBS/busslina-flutter-lightweight-lib
   flutter_riverpod: ^2.4.5
