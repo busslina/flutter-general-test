@@ -73,22 +73,23 @@ class _SubPageSelectorState extends State<_SubPageSelector> {
         children: [
           // Previous page button
           _buildButton('Previous',
-              widget.currentSubPageIndex == 0 ? null : _previousPage),
+              widget.currentSubPageIndex == 0 ? null : _previousSubPage),
 
           // Current page label
           fllib.Label('Subpage ${widget.currentSubPageIndex + 1}'),
 
           // Next page button
           _buildButton(
-              'Next', widget.currentSubPageIndex == 4 ? null : _nextPage),
+              'Next', widget.currentSubPageIndex == 4 ? null : _nextSubPage),
         ],
       ).sized(height: 50);
 
   Widget _buildButton(String text, VoidCallback? onPressed) =>
       ElevatedButton(onPressed: onPressed, child: fllib.Label(text));
 
-  void _previousPage() => widget.onIndexChanged(widget.currentSubPageIndex - 1);
-  void _nextPage() => widget.onIndexChanged(widget.currentSubPageIndex + 1);
+  void _previousSubPage() =>
+      widget.onIndexChanged(widget.currentSubPageIndex - 1);
+  void _nextSubPage() => widget.onIndexChanged(widget.currentSubPageIndex + 1);
 }
 
 class _SubPage extends StatefulWidget {
@@ -103,7 +104,8 @@ class _SubPage extends StatefulWidget {
   State<_SubPage> createState() => _SubPageState();
 }
 
-class _SubPageState extends State<_SubPage> with AutomaticKeepAliveClientMixin {
+// class _SubPageState extends State<_SubPage> with AutomaticKeepAliveClientMixin {
+class _SubPageState extends State<_SubPage> {
   @override
   void initState() {
     super.initState();
@@ -118,7 +120,7 @@ class _SubPageState extends State<_SubPage> with AutomaticKeepAliveClientMixin {
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
+    // super.build(context);
     return Center(
       child: fllib.Label(
         widget.text,
@@ -127,6 +129,6 @@ class _SubPageState extends State<_SubPage> with AutomaticKeepAliveClientMixin {
     );
   }
 
-  @override
-  bool get wantKeepAlive => true;
+  // @override
+  // bool get wantKeepAlive => true;
 }
