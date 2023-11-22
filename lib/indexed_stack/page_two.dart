@@ -19,108 +19,145 @@ class PageTwo extends ConsumerStatefulWidget {
 class _PageTwoState extends ConsumerState<PageTwo> {
   int _subpageSelected = 0;
   final _subpages = [0];
+  final _subpagesKeys = [GlobalKey()];
 
   @override
-  Widget build(BuildContext context) => DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          body: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 125),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Return button
-                ElevatedButton(
-                  onPressed: () {
-                    ref
-                        .read(currentPageProvider.notifier)
-                        .changePage(const PageOne());
-                  },
-                  child: const Icon(Icons.keyboard_return),
-                ),
+  Widget build(BuildContext context) {
+    final List<Widget> subpagesWidgets = [];
 
-                // Add subpage button
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      _subpages.add(_subpages.length);
-                    });
-                  },
-                  child: const Icon(Icons.add),
-                ).marginTop(15),
+    llib.newLine();
 
-                // Add subpage button (before current)
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      _subpages.insert(_subpages.indexOf(_subpageSelected),
-                          _subpages.length);
-                    });
-                  },
-                  child: const fllib.Label(
-                    'Insert before current',
-                    color: Colors.black,
-                  ),
-                ).marginTop(15),
+    final List<String> aa = [];
 
-                // Subpages count text
-                fllib.Label(
-                  'Subpages: ${_subpages.length}',
-                  color: Colors.black,
-                ).marginTop(10),
+    aa.indexed;
 
-                // Subpage selector
-                _SubPageSelector(
-                  currentSubPageIndex: _subpageSelected,
-                  currentSubPagePosition: _subpages.indexOf(_subpageSelected),
-                  onIndexChanged: _changeSelectedSubpage,
-                  subpagesCount: _subpages.length,
-                ).marginTop(20),
+    for (final (positionalIndex, index) in _subpages.indexed) {
+      llib.debug(
+          'Creating subpage widget -- Index: $index, Key: ${_subpagesKeys[positionalIndex]}');
 
-                // Shuffle button
-                ElevatedButton(
-                    onPressed: _shuffleSubpages,
-                    child: const fllib.Label(
-                      'Shuffle subpages',
-                      color: Colors.black,
-                    )).marginTop(10),
-
-                // Remove current button
-                ElevatedButton(
-                  onPressed: _subpages.length <= 1
-                      ? null
-                      : () {
-                          setState(() {
-                            final res = _subpages.remove(_subpageSelected);
-                            if (!res) {
-                              throw ('Error removing current subpage');
-                            }
-                          });
-                        },
-                  child: const fllib.Label(
-                    'Remove current',
-                    color: Colors.black,
-                  ),
-                ).marginTop(15),
-
-                // Subpage
-                Expanded(
-                    child: IndexedStack(
-                  index: _subpages.indexOf(_subpageSelected),
-                  children: [
-                    for (final index in _subpages)
-                      _SubPage(
-                        key: Key(index.toString()),
-                        text: 'Subpage $index',
-                        position: _subpages.indexOf(_subpageSelected),
-                      ),
-                  ],
-                ))
-              ],
-            ),
-          ),
+      subpagesWidgets.add(
+        _SubPage(
+          // key: _subpagesKeys[index],
+          key: _subpagesKeys[positionalIndex],
+          text: 'Subpage $index',
+          position: _subpages.indexOf(_subpageSelected),
         ),
       );
+    }
+
+    llib.newLine();
+
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 125),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Return button
+              ElevatedButton(
+                onPressed: () {
+                  ref
+                      .read(currentPageProvider.notifier)
+                      .changePage(const PageOne());
+                },
+                child: const Icon(Icons.keyboard_return),
+              ),
+
+              // Add subpage button
+              ElevatedButton(
+                onPressed: _addSubpage,
+                child: const Icon(Icons.add),
+              ).marginTop(15),
+
+              // Add subpage button (before current)
+              ElevatedButton(
+                onPressed: _addSubpageBeforeCurrent,
+                child: const fllib.Label(
+                  'Insert before current',
+                  color: Colors.black,
+                ),
+              ).marginTop(15),
+
+              // Subpages count text
+              fllib.Label(
+                'Subpages: ${_subpages.length}',
+                color: Colors.black,
+              ).marginTop(10),
+
+              // Subpage selector
+              _SubPageSelector(
+                currentSubPageIndex: _subpageSelected,
+                currentSubPagePosition: _subpages.indexOf(_subpageSelected),
+                onIndexChanged: _changeSelectedSubpage,
+                subpagesCount: _subpages.length,
+              ).marginTop(20),
+
+              // Shuffle button
+              ElevatedButton(
+                  onPressed: _shuffleSubpages,
+                  child: const fllib.Label(
+                    'Shuffle subpages',
+                    color: Colors.black,
+                  )).marginTop(10),
+
+              // Remove current button
+              ElevatedButton(
+                onPressed: _removeCurrentSubpage,
+                child: const fllib.Label(
+                  'Remove current',
+                  color: Colors.black,
+                ),
+              ).marginTop(15),
+
+              // Subpage
+              Expanded(
+                  child: IndexedStack(
+                index: _subpages.indexOf(_subpageSelected),
+                children: subpagesWidgets,
+              ))
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  _addSubpage() {
+    setState(() {
+      _subpages.add(_subpages.length);
+      _subpagesKeys.add(GlobalKey());
+    });
+
+    _debugLists('_addSubpage()');
+  }
+
+  _addSubpageBeforeCurrent() {
+    setState(() {
+      final index = _subpages.indexOf(_subpageSelected);
+      _subpages.insert(index, _subpages.length);
+      _subpagesKeys.insert(index, GlobalKey());
+    });
+
+    _debugLists('_addSubpageBeforeCurrent()');
+  }
+
+  _removeCurrentSubpage() {
+    setState(() {
+      final index = _subpages.indexOf(_subpageSelected);
+
+      if (index == -1) {
+        throw ('Error removing current subpage');
+      }
+
+      // final res = _subpages.remove(_subpageSelected);
+      _subpages.removeAt(index);
+      _subpagesKeys.removeAt(index);
+    });
+
+    _debugLists('_removeCurrentSubpage()');
+  }
 
   void _changeSelectedSubpage(int position) {
     final newIndex = _subpages[position];
@@ -135,10 +172,21 @@ class _PageTwoState extends ConsumerState<PageTwo> {
   }
 
   void _shuffleSubpages() {
+    throw ('Not implemented for _subpagesKeys');
+
     setState(() {
       _subpages.shuffle();
       llib.debug(_subpages);
     });
+  }
+
+  _debugLists(String debugTab) {
+    llib.debug('--- $debugTab ---', startFlagNL: true);
+
+    llib.debug('Subpages: $_subpages');
+    llib.debug('Subpages keys: $_subpagesKeys');
+
+    llib.debug('--- $debugTab ---', endFlagNL: true);
   }
 }
 
@@ -201,12 +249,12 @@ class _SubPageState extends State<_SubPage> {
   @override
   void initState() {
     super.initState();
-    llib.debug('_SubPageState.initState() -- ${widget.text}');
+    llib.debug('_SubPageState.initState() -- ${widget.text} -- ${widget.key}');
   }
 
   @override
   void dispose() {
-    llib.debug('_SubPageState.dispose() -- ${widget.text}');
+    llib.debug('_SubPageState.dispose() -- ${widget.text} -- ${widget.key}');
     super.dispose();
   }
 
