@@ -4,8 +4,6 @@ import 'package:busslina_flutter_lightweight_lib/busslina_flutter_lightweight_li
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'providers.dart';
-
 class PageOne extends ConsumerStatefulWidget {
   const PageOne({Key? key}) : super(key: key);
 

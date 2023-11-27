@@ -25,8 +25,12 @@ class _AppState extends ConsumerState<App> {
   }
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: ref.watch(currentPageProvider),
-      );
+  Widget build(BuildContext context) {
+    fllib.debug('_AppState.build()');
+
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: ref.watch(currentPageProvider),
+    );
+  }
 }
