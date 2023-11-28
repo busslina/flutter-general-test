@@ -47,78 +47,75 @@ class _PageTwoState extends ConsumerState<PageTwo> {
 
     llib.newLine();
 
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 125),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Return button
-              ElevatedButton(
-                onPressed: () {
-                  ref
-                      .read(currentPageProvider.notifier)
-                      .changePage(const PageOne());
-                },
-                child: const Icon(Icons.keyboard_return),
-              ),
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 125),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Return button
+            ElevatedButton(
+              onPressed: () {
+                ref
+                    .read(currentPageProvider.notifier)
+                    .changePage(const PageOne());
+              },
+              child: const Icon(Icons.keyboard_return),
+            ),
 
-              // Add subpage button
-              ElevatedButton(
-                onPressed: _addSubpage,
-                child: const Icon(Icons.add),
-              ).marginTop(15),
+            // Add subpage button
+            ElevatedButton(
+              onPressed: _addSubpage,
+              child: const Icon(Icons.add),
+            ).marginTop(15),
 
-              // Add subpage button (before current)
-              ElevatedButton(
-                onPressed: _addSubpageBeforeCurrent,
-                child: const fllib.Label(
-                  'Insert before current',
-                  color: Colors.black,
-                ),
-              ).marginTop(15),
-
-              // Subpages count text
-              fllib.Label(
-                'Subpages: ${_subpages.length}',
+            // Add subpage button (before current)
+            ElevatedButton(
+              onPressed: _addSubpageBeforeCurrent,
+              child: const fllib.Label(
+                'Insert before current',
                 color: Colors.black,
-              ).marginTop(10),
+              ),
+            ).marginTop(15),
 
-              // Subpage selector
-              _SubPageSelector(
-                currentSubPageIndex: _subpageSelected,
-                currentSubPagePosition: _subpages.indexOf(_subpageSelected),
-                onIndexChanged: _changeSelectedSubpage,
-                subpagesCount: _subpages.length,
-              ).marginTop(20),
+            // Subpages count text
+            fllib.Label(
+              'Subpages: ${_subpages.length}',
+              color: Colors.black,
+            ).marginTop(10),
 
-              // Shuffle button
-              ElevatedButton(
-                  onPressed: _shuffleSubpages,
-                  child: const fllib.Label(
-                    'Shuffle subpages',
-                    color: Colors.black,
-                  )).marginTop(10),
+            // Subpage selector
+            _SubPageSelector(
+              currentSubPageIndex: _subpageSelected,
+              currentSubPagePosition: _subpages.indexOf(_subpageSelected),
+              onIndexChanged: _changeSelectedSubpage,
+              subpagesCount: _subpages.length,
+            ).marginTop(20),
 
-              // Remove current button
-              ElevatedButton(
-                onPressed: _removeCurrentSubpage,
+            // Shuffle button
+            ElevatedButton(
+                onPressed: _shuffleSubpages,
                 child: const fllib.Label(
-                  'Remove current',
+                  'Shuffle subpages',
                   color: Colors.black,
-                ),
-              ).marginTop(15),
+                )).marginTop(10),
 
-              // Subpage
-              Expanded(
-                  child: IndexedStack(
-                index: _subpages.indexOf(_subpageSelected),
-                children: subpagesWidgets,
-              ))
-            ],
-          ),
+            // Remove current button
+            ElevatedButton(
+              onPressed: _removeCurrentSubpage,
+              child: const fllib.Label(
+                'Remove current',
+                color: Colors.black,
+              ),
+            ).marginTop(15),
+
+            // Subpage
+            Expanded(
+                child: IndexedStack(
+              index: _subpages.indexOf(_subpageSelected),
+              children: subpagesWidgets,
+            ))
+          ],
         ),
       ),
     );
