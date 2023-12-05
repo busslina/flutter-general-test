@@ -34,5 +34,11 @@
             "type": "dart",
             "program": "lib/init_state.main.dart"
         },
+        {
+            "name": "Shrink Issue",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/shrink_issue.main.dart"
+        },
     ]
 }
