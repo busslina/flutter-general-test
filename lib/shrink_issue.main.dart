@@ -28,7 +28,7 @@ class PageWidget extends StatelessWidget {
   Widget build(BuildContext context) => Container(
         child: Column(
           children: [
-            _buildFieldset('Configuration'),
+            _buildFieldset(),
           ],
         )
             .bgColor(
@@ -41,10 +41,8 @@ class PageWidget extends StatelessWidget {
         Colors.orange,
       );
 
-  Widget _buildFieldset(String title) => fllib.FieldSet(
-        title: title,
-        titleColor: Colors.black,
-        borderColor: Colors.black,
+  Widget _buildFieldset() => Container(
+        // width: 0,
         child: Column(
           children: [
             const fllib.Label('Field 1').sized(width: 100).bgColor(Colors.pink),
@@ -56,9 +54,16 @@ class PageWidget extends StatelessWidget {
                 .sized(width: 400)
                 .bgColor(Colors.pink)
                 .marginTop(10),
+            const fllib.Label('Field 4')
+                .sized(width: 600)
+                .bgColor(Colors.pink)
+                .marginTop(10),
           ],
         )
-            .bgColor(Colors.green)
+            .bgColor(
+              Colors.green,
+              active: false,
+            )
             .withSizeConstraints(
               _constraints,
             )
@@ -70,5 +75,5 @@ class PageWidget extends StatelessWidget {
           .withSizeConstraints(
             _constraints,
           )
-          .centered();
+          .centered(active: true);
 }
