@@ -62,7 +62,7 @@ class PageWidget extends StatelessWidget {
         )
             .bgColor(
               Colors.green,
-              active: false,
+              active: true,
             )
             .withSizeConstraints(
               _constraints,
