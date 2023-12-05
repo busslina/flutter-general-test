@@ -18,6 +18,8 @@ class App extends StatelessWidget {
 }
 
 class PageWidget extends StatelessWidget {
+  static const _constraints = BoxConstraints(minWidth: 350);
+
   const PageWidget({
     super.key,
   });
@@ -55,8 +57,18 @@ class PageWidget extends StatelessWidget {
                 .bgColor(Colors.pink)
                 .marginTop(10),
           ],
-        ).bgColor(Colors.green),
+        )
+            .bgColor(Colors.green)
+            .withSizeConstraints(
+              _constraints,
+            )
+            .centered(),
       )
-          .bgColor(Colors.yellow)
-          .withSizeConstraints(const BoxConstraints(minWidth: 350));
+          .bgColor(
+            Colors.yellow,
+          )
+          .withSizeConstraints(
+            _constraints,
+          )
+          .centered();
 }
